@@ -1,4 +1,4 @@
-const CACHE = 'fanfest-v5';
+const CACHE = 'fanfest-v6';
 const FILES = ['./', './index.html', './manifest.webmanifest', './apple-touch-icon.png', './icon-192.png', './icon-512.png'];
 const FONT_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com'];
 self.addEventListener('install', e => {
