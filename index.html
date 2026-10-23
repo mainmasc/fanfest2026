@@ -49,7 +49,7 @@
   :root{--spring:cubic-bezier(.2,1.1,.3,1);--spring-pill:cubic-bezier(.25,1.15,.35,1);--spring-pop:cubic-bezier(.34,1.8,.5,1)}
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth;background:var(--paper)}
+html{background:var(--paper)}
 body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 var(--jp);font-feature-settings:"palt";-webkit-text-size-adjust:100%;padding-bottom:calc(var(--tab-h) + env(safe-area-inset-bottom) + 12px);overscroll-behavior-y:none}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit}
@@ -69,25 +69,11 @@ button{font:inherit;color:inherit}
 body:not(:has(:target)) #d1{display:block}
 body:is(.start-d2,.start-prep,.start-me):not(:has(:target)) #d1{display:none}
 body.start-d2:not(:has(:target)) #d2,body.start-prep:not(:has(:target)) #prep,body.start-me:not(:has(:target)) #me{display:block}
-html:not(.vt) .view{animation:enter .3s var(--out)}
 @keyframes enter{from{opacity:0;transform:translateY(8px)}}
 h1.vt{font-size:30px;line-height:1.15;font-weight:800;margin:18px 0 4px;letter-spacing:.01em}
 h2{font-size:15px;font-weight:800;margin:30px 0 6px}
 .lead{font-size:13px;color:var(--sub);margin:0 0 12px}
 
-/* view transitions: direction-aware slide that overlaps (no blank frame) */
-@keyframes vt-out-l{to{opacity:0;transform:translateX(-28px)}}
-@keyframes vt-in-r{from{opacity:0;transform:translateX(28px)}}
-@keyframes vt-out-r{to{opacity:0;transform:translateX(28px)}}
-@keyframes vt-in-l{from{opacity:0;transform:translateX(-28px)}}
-::view-transition-old(main){animation:vt-out-l .21s var(--in) both}
-::view-transition-new(main){animation:vt-in-r .3s var(--out) both}
-html[data-dir="back"]::view-transition-old(main){animation-name:vt-out-r}
-html[data-dir="back"]::view-transition-new(main){animation-name:vt-in-l}
-::view-transition-group(daypill){animation-duration:.42s;animation-timing-function:var(--spring-pill)}
-main{view-transition-name:main}
-.tabs{view-transition-name:tabs}
-.top{view-transition-name:top}
 
 /* segmented day switch: the text stays still, only the pill moves */
 .seg{position:relative;display:grid;grid-template-columns:1fr 1fr;padding:4px;margin:14px 0 4px;background:var(--line);border-radius:14px;isolation:isolate}
@@ -95,8 +81,7 @@ main{view-transition-name:main}
 .seg b{font-size:26px;line-height:1;font-weight:700}
 .seg .on,.seg input:checked+label{color:var(--ink)}
 .seg input{position:absolute;opacity:0;pointer-events:none}
-.seg .pill{position:absolute;z-index:0;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:10px;background:var(--surface);box-shadow:0 1px 0 rgba(22,32,43,.06),0 2px 6px rgba(22,32,43,.06);transition:transform .45s var(--spring-pill);view-transition-name:none}
-.seg.day .pill{view-transition-name:daypill}
+.seg .pill{position:absolute;z-index:0;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:10px;background:var(--surface);box-shadow:0 1px 0 rgba(22,32,43,.06),0 2px 6px rgba(22,32,43,.06);transition:transform .45s var(--spring-pill)}
 #d2 .seg .pill,.seg:has(#me-d2:checked) .pill{transform:translateX(100%)}
 .seg a:active,.seg label:active{transform:scale(.97);transition:transform .1s}
 
@@ -135,7 +120,6 @@ details.more summary .what{display:inline}
 details.more summary::after{content:"";display:inline-block;width:6px;height:6px;margin-left:9px;border-right:1.8px solid var(--faint);border-bottom:1.8px solid var(--faint);transform:translateY(-4px) rotate(45deg);transition:transform .3s var(--out)}
 details.more[open] summary::after{transform:translateY(-1px) rotate(-135deg)}
 details.more .body{font-size:13px;color:var(--sub);padding-top:6px;line-height:1.7}
-details.more[open] .body{animation:reveal .3s var(--out)}
 @keyframes reveal{from{opacity:0;transform:translateY(-4px)}}
 .ev.past{opacity:.4}
 .ev.past .t{color:var(--faint)}
@@ -145,7 +129,6 @@ details.more[open] .body{animation:reveal .3s var(--out)}
 .nowline.show{display:block}
 .nowline::before{content:"";position:absolute;left:-18px;right:0;top:-1px;border-top:2px solid var(--amber)}
 .nowline::after{content:attr(data-time);position:absolute;left:-18px;top:-10px;padding:0 6px;border-radius:0 9px 9px 0;background:var(--amber);color:#2b1c00;font:700 13px/18px var(--num)}
-html.intro .view .ev{animation:rise .42s var(--out) both;animation-delay:calc(var(--i,0) * 28ms)}
 @keyframes rise{from{opacity:0;transform:translateY(10px)}}
 
 /* add buttons */
@@ -186,9 +169,9 @@ html.intro .view .ev{animation:rise .42s var(--out) both;animation-delay:calc(va
 /* maps */
 .chips{position:sticky;top:0;z-index:12;margin:6px -18px 0;padding:8px 18px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .chips::-webkit-scrollbar{display:none}
-.chip{position:relative;flex:none;font-size:14px;font-weight:700;padding:8px 12px;color:var(--sub);transition:color .25s var(--out)}
+.chip{position:relative;flex:none;font-size:14px;font-weight:700;padding:8px 12px;color:var(--sub)}
 .chip.on{color:var(--ink)}
-.chip.on::after{content:"";position:absolute;left:12px;right:12px;bottom:2px;height:2px;border-radius:2px;background:var(--ink);animation:grow .3s var(--out)}
+.chip.on::after{content:"";position:absolute;left:12px;right:12px;bottom:2px;height:2px;border-radius:2px;background:var(--ink)}
 @keyframes grow{from{transform:scaleX(.2);opacity:0}}
 .place{scroll-margin-top:64px;padding-top:4px}
 #pl-park{min-height:calc(100vh - 150px)}
@@ -260,10 +243,10 @@ html.intro .view .ev{animation:rise .42s var(--out) both;animation-delay:calc(va
 .clash-l{font-size:11px;font-weight:800;color:#2b1c00;background:var(--amber);border-radius:5px;padding:1px 6px}
 .ev.mi.clash .t{color:var(--amber-ink)}
 .mi .t.none{font-size:16px;color:var(--faint);padding-top:4px}
-.edw{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s var(--out)}
+.edw{display:grid;grid-template-rows:0fr}
 .mi.open .edw{grid-template-rows:1fr}
 .edw>div{overflow:hidden;min-height:0}
-.ed{margin-top:10px;padding:12px;border-radius:14px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);cursor:auto;opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .3s var(--out)}
+.ed{margin-top:10px;padding:12px;border-radius:14px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);cursor:auto}
 .mi.open .ed{opacity:1;transform:none}
 .ed .r{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .ed .r+.r{margin-top:10px}
@@ -295,7 +278,7 @@ html.intro .view .ev{animation:rise .42s var(--out) both;animation-delay:calc(va
 
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after,::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
 </style>
 </head>
@@ -711,16 +694,12 @@ function go(hash, opts){
   if(sameView){
     // let the browser scroll to the anchor (honours scroll-margin); one scroll only
     if(location.hash!==hash) location.hash=hash;
-    else target.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});
+    else target.scrollIntoView({behavior:'auto',block:'start'});
     restartMarks(target); onView(to);
     return;
   }
   root.dataset.dir=(ORDER[to.id]||0)<(ORDER[from&&from.id]||0)?'back':'fwd';
-  if(document.startViewTransition && !RM){
-    root.classList.add('vt');
-    var vt=document.startViewTransition(apply);
-    vt.finished.finally(function(){ root.classList.remove('vt'); afterNav(target,inner); });
-  } else { apply(); afterNav(target,inner); }
+  apply(); afterNav(target,inner);
   placeInd(true);
 }
 function afterNav(target,inner){
@@ -762,7 +741,7 @@ function markTimeline(list,day,getSE){
 }
 $$('.tl-list[data-day]').forEach(function(list){
   var focus=markTimeline(list,list.dataset.day,function(e){return [m(e.dataset.s),m(e.dataset.e)]});
-  if(focus) setTimeout(function(){ if(list.offsetParent) focus.scrollIntoView({block:'center',behavior:RM?'auto':'smooth'}); },500);
+  if(focus) requestAnimationFrame(function(){ if(list.offsetParent) focus.scrollIntoView({block:'center',behavior:'auto'}); });
 });
 
 /* ---------- deadlines & checklist ---------- */
@@ -799,7 +778,7 @@ $$('.filters input').forEach(function(r){
     food.dataset.f=r.id.replace('f-','');
     placeFilterPill(true);
     var lab=r.nextElementSibling, bar=lab.parentNode; bar.scrollTo({left:lab.offsetLeft-bar.clientWidth/2+lab.offsetWidth/2,behavior:RM?'auto':'smooth'});
-    if(RM) return;
+    return;
     var k=0;
     rows.forEach(function(li){
       if(!li.offsetParent) return;
@@ -855,7 +834,7 @@ function fly(from,done){
 function toggle(id,btn){
   if(plan[id]){ var keep=plan[id]; delete plan[id]; save(); syncButtons(); syncBadge(); render(); toast('外しました',function(){ plan[id]=keep; save(); syncButtons(); syncBadge(true); render(); }); return; }
   var it=items[id]; plan[id]=it.fx?{d:it.d,t:it.s}:{d:null,t:null};
-  save(); syncButtons(); render(); fly(btn,function(){ syncBadge(true); });
+  save(); syncButtons(); render(); syncBadge(true); fly(btn,function(){});
 }
 
 /* ---------- toast with undo ---------- */
@@ -912,7 +891,7 @@ function commit(li,id){
 function remove(li,id,dx){
   var keep=plan[id]; delete plan[id]; save(); syncButtons(); syncBadge(); openId=null;
   var finish=function(){ render(); toast('外しました',function(){ plan[id]=keep; flashId=id; save(); syncButtons(); syncBadge(true); render(); }); };
-  if(RM||!li.animate){ finish(); return; }
+  finish(); return;
   var w=li.offsetWidth, h=li.offsetHeight;
   li.animate([{transform:'translateX('+dx+'px)',opacity:1},{transform:'translateX('+(-w)+'px)',opacity:0}],{duration:210,easing:IN,fill:'forwards'}).onfinish=function(){
     li.style.overflow='hidden';
@@ -955,19 +934,18 @@ function render(){
     list.appendChild(el);
   });
   markTimeline(list,day,function(e){ var id=e.dataset.id; if(!plan[id]||!plan[id].t) return null; var s=m(plan[id].t); return [s,items[id].fx?m(items[id].e):s+30]; });
-  if(!RM) $$('#me .mi').forEach(function(el){
+  if(false) $$('#me .mi').forEach(function(el){
     var b=before[el.dataset.id], a=el.getBoundingClientRect().top;
     if(b===undefined) el.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:300,easing:OUT});
     else if(Math.abs(b-a)>2) el.animate([{transform:'translateY('+(b-a)+'px)'},{transform:'none'}],{duration:480,easing:getComputedStyle(root).getPropertyValue('--spring').trim()||OUT});
   });
-  if(flashId){ var fe=$('#me .mi[data-id="'+CSS.escape(flashId)+'"]'); flashId=null; if(fe){ fe.classList.add('flash'); setTimeout(function(){ fe.scrollIntoView({block:'center',behavior:RM?'auto':'smooth'}); },80); } }
+  if(flashId){ var fe=$('#me .mi[data-id="'+CSS.escape(flashId)+'"]'); flashId=null; if(fe){ fe.classList.add('flash'); requestAnimationFrame(function(){ fe.scrollIntoView({block:'center',behavior:'auto'}); }); } }
 }
 $$('#me-seg input').forEach(function(r){ r.addEventListener('change',function(){ openId=null; render(); }); });
 if(YMD==='2026-11-01') document.getElementById('me-d2').checked=true;
 
 /* ---------- boot ---------- */
 syncButtons(); syncBadge(false); render(); placeInd(false); placeFilterPill(false); spy();
-if(!RM){ var v=activeView(); if(v){ $$('.ev',v).forEach(function(e,i){ e.style.setProperty('--i',Math.min(i,12)); }); root.classList.add('intro'); setTimeout(function(){root.classList.remove('intro')},1000); } }
 document.fonts&&document.fonts.ready.then(function(){ placeInd(false); placeFilterPill(false); });
 })();
 </script>
